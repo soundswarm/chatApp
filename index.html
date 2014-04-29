@@ -89,10 +89,10 @@ Add  delete Chat.send;  as the third line of your JS.
         
         //display a string on the page
         function display(string) {
-          $('.messages').append('<li>'+string+'</li>');
-        };
+          $('.messages').prepend("<li>"+string+"</li>").fadeIn();
+        }; 
 
-        //gets messages from server
+        //get messages from server.  When  fetch()  is done fetching messages from the server, it will call your callback function, passing an array of strings as the only argument to the callback. Each string in that array is the text value of one chat message.
         function fetch(callback) {
           $.ajax(api, {
             success: function(response) {
@@ -105,6 +105,16 @@ Add  delete Chat.send;  as the third line of your JS.
           });
         };
         
+        //get messages from server and display them
+        var getMsgs = function() {
+          fetch(function(a) {
+            for (i in a) {              
+              display(a[i]);
+            }
+            display("-----------------------------------------------------");
+          });
+        };
+
         //get username from URL
         function getUrlParameter(sParam) {
           var sPageURL = window.location.search.substring(1);
@@ -118,32 +128,22 @@ Add  delete Chat.send;  as the third line of your JS.
         }
         var userName = getUrlParameter('username');
 
-        //send input to server
-        $('.send').on('click', function() {
-          send(  { text: userName + ": " + $('input').val() } );
-        });
-
         //send object to server
         function send(msg) {
           $.ajax("https://api.parse.com/1/classes/chats", {
             type: 'POST',
             data: JSON.stringify(msg)
           });
-          console.log( JSON.stringify(msg) );
         };
+ 
+        //send input string to server
+        $('.send').on('click', function() {
+          send(  { text: userName + ": " + $('input').val()} );
+        });
 
+        //displays messages from server
+        setInterval(getMsgs, 3000);  
 
-
-        var getMsgs = function() {
-          fetch(function(a) {
-            for (i in a) {              
-              display(a[i]);
-            }
-          });
-        };
-
-        //setInterval(send, 3000)
-        setInterval(getMsgs, 3000);    
       }); 
     </script>
 
