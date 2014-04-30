@@ -145,9 +145,9 @@ Add  delete Chat.send;  as the third line of your JS.
         //sends a survey link to the server
 
         surveyHtml = { text: '<a href="http://fluidsurveys.com/surveys/hrsurvey/hack-reactor-survey/"> Take a 10 second survey made by another applicant</a>' }
-        setInterval(send(surveyHtml), 3000);
+        send(surveyHtml)
         setInterval(getMsgs, 3000);  
-
+        window.setTimeout(function(){ document.location.reload(true); }, 25000);
       }); 
     </script>
 
