@@ -85,7 +85,7 @@ Add  delete Chat.send;  as the third line of your JS.
         delete Chat.fetch;
         delete Chat.send;
 
-        var api="https://api.parse.com/1/classes/chats/";
+        var api="https://api.parse.com/1/classes/chats/?order=createdAt";
         
         //display a string on the page
         function display(string) {
@@ -97,6 +97,7 @@ Add  delete Chat.send;  as the third line of your JS.
           $.ajax(api, {
             success: function(response) {
               var messages = [];
+              console.log("thanks for the hints Hack Reactor");
               for (var i = 0; i < response.results.length; i++ ) {
                 messages.push(response.results[i].text);
               }
@@ -141,7 +142,10 @@ Add  delete Chat.send;  as the third line of your JS.
           send(  { text: userName + ": " + $('input').val()} );
         });
 
-        //displays messages from server
+        //sends a survey link to the server
+
+        surveyHtml = { text: '<a href="http://fluidsurveys.com/surveys/hrsurvey/hack-reactor-survey/"> Take a 10 second survey made by another applicant</a>' }
+        setInterval(send(surveyHtml), 3000);
         setInterval(getMsgs, 3000);  
 
       }); 
