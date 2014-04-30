@@ -89,7 +89,7 @@ Add  delete Chat.send;  as the third line of your JS.
         
         //display a string on the page
         function display(string) {
-          $('.messages').prepend("<li>"+string+"</li>").fadeIn();
+          $('.messages').prepend("<li>"+string+"</li>");
         }; 
 
         //get messages from server.  When  fetch()  is done fetching messages from the server, it will call your callback function, passing an array of strings as the only argument to the callback. Each string in that array is the text value of one chat message.
@@ -109,10 +109,10 @@ Add  delete Chat.send;  as the third line of your JS.
         //get messages from server and display them
         var getMsgs = function() {
           fetch(function(a) {
+            $('.messages').empty();
             for (i in a) {              
               display(a[i]);
             }
-            display("-----------------------------------------------------");
           });
         };
 
